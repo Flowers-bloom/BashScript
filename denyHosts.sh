@@ -1,4 +1,4 @@
-# !/bin/bash 防暴力破解登录脚本
+# /bin/bash 防暴力破解登录
 file="denyHosts.txt"
 limit=3
 
@@ -14,11 +14,10 @@ for i in `cat $file`
 do
         num=`echo $i | awk -F- '{print int($1)}'`
         ip=`echo $i | awk -F- '{print $2}'`
-        if [ $num -ge $limit ]
+        if [ "$num" -ge "$limit" ]
         then
-
                 ipExist=`grep $ip /etc/hosts.deny -w`
-                if [ ! -z $ipExist ]
+                if [ -z "$ipExist" ]  #匹配内容为空
                 then
                         echo "sshd:$ip" >> /etc/hosts.deny
                 fi
